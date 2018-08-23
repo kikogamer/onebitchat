@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'channels/create'
-
-  get 'channels/destroy'
-
-  get 'channels/show'
-
+  root to: 'teams#index'
+  resources :teams, only: [:create, :destroy]
+  get '/:slug', to: 'teams#show'
+  resources :channels, only: [:show, :create, :destroy]
+  resources :talks, only: [:show]
+  resources :team_users, only: [:create, :destroy]
   devise_for :users, :controllers => { registrations: 'registrations' }
 end
