@@ -21,4 +21,4 @@ $(document).on 'turbolinks:load', ->
           Materialize.toast('Problem in add Channel &nbsp;<b>:(</b>', 4000, 'red')
 
     $('#add_channel_modal').modal('close')
-return false
+    return false

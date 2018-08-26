@@ -40,9 +40,6 @@ window.open = (id, type) ->
 
     return false
 
-
-
-
 window.add = (slug, id, type) ->
   additional = if type == "channel" then "#" else ""
   $('.' + type + 's').prepend('<li class="' + type + '_' + id + '">' +
@@ -54,4 +51,4 @@ window.add = (slug, id, type) ->
                                         '<i class="material-icons" id="' + id + '">settings</i>' +
                                     '</a>' +
                                 '</div>' +
-'</li>')
+                              '</li>')

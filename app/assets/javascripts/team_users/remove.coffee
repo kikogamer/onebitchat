@@ -18,4 +18,3 @@ $(document).on 'turbolinks:load', ->
 
     $('#remove_user_modal').modal('close')
     return false
-view raw

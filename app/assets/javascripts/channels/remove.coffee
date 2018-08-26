@@ -19,4 +19,4 @@ $(document).on 'turbolinks:load', ->
           Materialize.toast('Problem to delete Channel &nbsp;<b>:(</b>', 4000, 'red')
 
     $('#remove_channel_modal').modal('close')
-return false
+    return false

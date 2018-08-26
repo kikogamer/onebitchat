@@ -22,4 +22,4 @@ $(document).on 'turbolinks:load', ->
 
 
     $('#add_user_modal').modal('close')
-return false
+    return false
