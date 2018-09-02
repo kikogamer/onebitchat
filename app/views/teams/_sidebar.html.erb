@@ -6,6 +6,10 @@
          <a class="right team_icon remove_team" href="#">
          <i class="material-icons" id="<%= @team.id %>">settings</i>
          </a>
+         <% else %>
+        <a class="right team_icon leave_team" id="<%= current_user.id %>" href="#" style="color: #ccc">
+        <i class="material-icons" id="<%= current_user.id %>">settings</i>
+        </a>                           
          <% end %>
       </div>
    </li>
