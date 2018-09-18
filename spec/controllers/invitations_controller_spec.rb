@@ -9,30 +9,22 @@ RSpec.describe InvitationsController, type: :controller do
         sign_in @current_user
     end
 
-    describe "GET #show" do
-        context "user exists" do
-            it "Returns success" do
-                get :show, params: {user_id: @current_user.id}
-
-                expect(response).to have_http_status(:success)
-            end
-        end
-
-        context "user not exists" do
-            it "Returns Unprocessable Entity" do
-                user = FactoryBot.create(:user)
-                get :show, params: {user_id: user.id}
-
-                expect(response).to have_http_status(:unprocessable_entity)
-            end
+    describe "GET #index" do
+        it "Returns success" do
+            get :index
+            expect(response).to have_http_status(:success)
         end
     end
 
     describe "POST #create" do
+        before(:each) do
+            request.env["HTTP_ACCEPT"] = 'application/json'
+        end
+
         context "User belongs the team" do
             before(:each) do
                 @team = create(:team, user: @current_user)
-                @invitation_attributes = attributes_for(:invitation, team: @team, user: team.user)
+                @invitation_attributes = attributes_for(:invitation, team_id: @team.id, user_id: @team.user.id)
                 post :create, params: {invitation: @invitation_attributes}
             end
 
@@ -46,11 +38,12 @@ RSpec.describe InvitationsController, type: :controller do
             end
         end  
         
-        context "User doesn't belongs the team" do
+        context "User already belongs the team" do
             before(:each) do
-                user = FactoryBot.create(:user)
-                team = create(:team)
-                invitation_attributes = attributes_for(:invitation, team: team, user: user)
+                @user = create(:user)
+                @team = create(:team, user: @user)
+                @team_user = create(:team_user, team: @team, user: @user)
+                @invitation_attributes = attributes_for(:invitation, team_id: @team_user.team.id, user_id: @team_user.user.id)
                 post :create, params: {invitation: @invitation_attributes}
             end
 
@@ -67,9 +60,9 @@ RSpec.describe InvitationsController, type: :controller do
 
         context "Invitation is from the user" do
             before(:each) do
-                team = create(:team, user: @current_user)
-                @invitation = create(:invitation, team: team, user: team.user)
-                delete :destroy, params: { id: invitation.id }
+                @team = create(:team, user: @current_user)
+                @invitation = create(:invitation, team: @team, user: @team.user)
+                delete :destroy, params: { id: @invitation.id }
             end
 
             it "Returns success" do               
@@ -92,11 +85,34 @@ RSpec.describe InvitationsController, type: :controller do
             end   
             
             it "Returns not_found" do
-                id = Invitation.last.id + 1;
-                delete :destroy, params: { id: id }
-                
+                id = 1;
+                delete :destroy, params: { id: id }                
                 expect(response).to have_http_status(:not_found)
             end
+        end
+    end
+
+    describe "PUT #update" do
+        before(:each) do
+            request.env["HTTP_ACCEPT"] = 'application/json'
+        end
+
+        it "Returns success" do
+            team = create(:team, user: @current_user)
+            invitation = create(:invitation, team: team, user: team.user)
+            invitation_attributes = attributes_for(:invitation, team_id: team.id, user_id: team.user.id)
+            put :update, params: { id: invitation.id, invitation: invitation_attributes }
+
+            expect(response).to have_http_status(:success)
+            expect(Invitation.last.joined_date.present?).to be true
+        end
+
+        it "Returns not_found" do
+            id = 1;
+            invitation_attributes = attributes_for(:invitation)
+            put :update, params: { id: id, invitation: invitation_attributes }
+                
+            expect(response).to have_http_status(:not_found)
         end
     end
 end

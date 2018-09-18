@@ -1,7 +1,6 @@
 FactoryBot.define do
     factory :invitation do
-        user
         team
-        joined_date { FFaker::Time }
+        user
     end
 end
