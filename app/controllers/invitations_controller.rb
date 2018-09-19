@@ -45,7 +45,8 @@ class InvitationsController < ApplicationController
   private
 
   def invitation_params
-    params.require(:invitation).permit(:team_id, :user_id)
+    user = User.find_by(email: params[:invitation][:email])
+    params.require(:invitation).permit(:team_id).merge(user_id: user.id)
   end
 
   def set_invitation

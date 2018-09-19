@@ -24,8 +24,8 @@ RSpec.describe InvitationsController, type: :controller do
         context "User belongs the team" do
             before(:each) do
                 @team = create(:team, user: @current_user)
-                @invitation_attributes = attributes_for(:invitation, team_id: @team.id, user_id: @team.user.id)
-                post :create, params: {invitation: @invitation_attributes}
+                @invitation_attributes = attributes_for(:invitation, team_id: @team.id, email: @current_user.email)
+                post :create, params: { invitation: @invitation_attributes }
             end
 
             it "Returns created" do
@@ -43,7 +43,7 @@ RSpec.describe InvitationsController, type: :controller do
                 @user = create(:user)
                 @team = create(:team, user: @user)
                 @team_user = create(:team_user, team: @team, user: @user)
-                @invitation_attributes = attributes_for(:invitation, team_id: @team_user.team.id, user_id: @team_user.user.id)
+                @invitation_attributes = attributes_for(:invitation, team_id: @team_user.team.id, email: @team_user.user.email)
                 post :create, params: {invitation: @invitation_attributes}
             end
 
@@ -100,7 +100,7 @@ RSpec.describe InvitationsController, type: :controller do
         it "Returns success" do
             team = create(:team, user: @current_user)
             invitation = create(:invitation, team: team, user: team.user)
-            invitation_attributes = attributes_for(:invitation, team_id: team.id, user_id: team.user.id)
+            invitation_attributes = attributes_for(:invitation, team_id: team.id, email: team.user.email)
             put :update, params: { id: invitation.id, invitation: invitation_attributes }
 
             expect(response).to have_http_status(:success)
