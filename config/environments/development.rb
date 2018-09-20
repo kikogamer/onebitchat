@@ -31,6 +31,9 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Set default host for mailers, remember to do this in production as well!
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
+gem 'devise_invitable'
 gem 'cancancan'
 gem 'materialize-sass', '~> 0.98.2'
 gem 'material_icons'

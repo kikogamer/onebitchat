@@ -51,6 +51,20 @@ RSpec.describe InvitationsController, type: :controller do
                 expect(response).to have_http_status(:unprocessable_entity)
             end
         end
+
+        context "User not exists" do
+            before(:each) do
+                team = create(:team, user: @current_user)
+                name = FFaker::Lorem.word
+                email = FFaker::Internet.email
+                invitation_attributes = attributes_for(:invitation, team_id: team.id, name: name, email: email)
+                post :create, params: {invitation: invitation_attributes}
+            end
+
+            it "Returns created" do
+                expect(response).to have_http_status(:created)
+            end
+        end
     end
 
     describe "DELETE #destroy" do

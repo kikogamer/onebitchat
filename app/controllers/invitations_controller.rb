@@ -45,7 +45,10 @@ class InvitationsController < ApplicationController
   private
 
   def invitation_params
-    user = User.find_by(email: params[:invitation][:email])
+    name = params[:invitation][:name]
+    email = params[:invitation][:email]
+    user = User.find_by(email: email) 
+    user = User.invite!(name: name, email: email) unless user.present?        
     params.require(:invitation).permit(:team_id).merge(user_id: user.id)
   end
 
