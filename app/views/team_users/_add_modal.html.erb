@@ -1,17 +1,21 @@
 <div id="add_user_modal" class="modal">
   <div class="modal-content">
     <div class="row">
-      <%= form_tag("team_users", :method => :post, class: "col s12 add_user_form") do %>
+      <%= form_tag("invitations", :method => :post, class: "col s12 add_user_form") do %>
         <div class="row">
           <div class="col s12">
             <h4>Add a User</h4>
           </div>
           <div class="input-field col s12">
-            <%= hidden_field(:team_user, :team_id) %>
-            <%= text_field(:team_user, :email) %>
-            <%= label_tag(:email, "User Email") %>
-            <%= submit_tag("Add User", class: "btn right") %>
+            <%= hidden_field(:invitation, :team_id) %>
+            <%= text_field(:invitation, :name) %>
+            <%= label_tag(:name, "User Name") %>
           </div>
+          <div class="input-field col s12">
+            <%= text_field(:invitation, :email) %>
+            <%= label_tag(:email, "User Email") %>
+          </div>
+          <%= submit_tag("Add User", class: "btn right") %>
         </div>
       <% end %>
     </div>
