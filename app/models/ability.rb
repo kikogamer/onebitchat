@@ -27,7 +27,7 @@ class Ability
         t.user_id == user.id || t.team.user_id == user.id
       end
 
-      can :destroy, Invitation do |i|
+      can :destroy, TeamInvitation do |i|
         i.user_id == user.id
       end
     end

@@ -1,5 +1,5 @@
 FactoryBot.define do
-    factory :invitation do
+    factory :team_invitation do
         team
         user
     end

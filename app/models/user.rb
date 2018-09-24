@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :talks, dependent: :destroy
   has_many :team_users, dependent: :destroy
   has_many :member_teams, through: :team_users, :source => :team
-  has_many :invitations
+  has_many :team_invitations
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 

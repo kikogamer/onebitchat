@@ -1,7 +1,7 @@
 $(document).on 'turbolinks:load', ->
   $(".add_user").on 'click', (e) =>
     $('#add_user_modal').modal('open')
-    $('#invitation_team_id').val(e.target.id)
+    $('#team_invitation_team_id').val(e.target.id)
     return false
 
   $('.add_user_form').on 'submit', (e) ->
@@ -9,10 +9,10 @@ $(document).on 'turbolinks:load', ->
         type: 'POST'
         dataType: 'json',
         data: {
-          invitation: {
-            name: $('#invitation_name').val()
-            email: $('#invitation_email').val()
-            team_id: $('#invitation_team_id').val()
+          team_invitation: {
+            name: $('#team_invitation_name').val()
+            email: $('#team_invitation_email').val()
+            team_id: $('#team_invitation_team_id').val()
           }
         }
         success: (data, text, jqXHR) ->

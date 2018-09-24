@@ -25,14 +25,6 @@ ActiveRecord::Schema.define(version: 20180920003519) do
     t.index ["user_id"], name: "index_channels_on_user_id", using: :btree
   end
 
-  create_table "invitations", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "team_id"
-    t.date     "joined_date"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "messages", force: :cascade do |t|
     t.text     "body"
     t.integer  "user_id"
@@ -49,6 +41,14 @@ ActiveRecord::Schema.define(version: 20180920003519) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["team_id"], name: "index_talks_on_team_id", using: :btree
+  end
+
+  create_table "team_invitations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.date     "joined_date"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "team_users", force: :cascade do |t|
