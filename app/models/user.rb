@@ -11,4 +11,8 @@ class User < ApplicationRecord
   def my_teams
     self.teams + self.member_teams
   end
+
+  def my_team_invitations
+    TeamInvitation.where(user: self, joined_date: nil)
+  end
 end

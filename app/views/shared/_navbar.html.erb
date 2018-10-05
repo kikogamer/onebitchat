@@ -6,6 +6,31 @@
 
       <ul class="right hide-on-med-and-down">
         <% if current_user %>
+          <% team_invitations = current_user.my_team_invitations %>
+          <% if team_invitations.size > 0 %>
+            <li>
+              <a href="#" class='dropdown-button' data-activates='team_invitations' data-constrainWidth="false" data-beloworigin="true" 
+                alignment='left'><i class="material-icons" title="My Invitations">notifications_active</i></a>
+              <ul id="team_invitations" class="dropdown-content collection">
+                <% team_invitations.each do |team_invitation| %>
+                  <li class='collection-item' id="<%= team_invitation.id %>">
+                    <span class="title"><%= team_invitation.team.slug %> Team</span>
+                      <p>You were invite to join the team.</p>
+                      <div class="row">
+                        <%= form_tag("team_invitations/"+ team_invitation.id.to_s, :method => :put, class: "col s6 accept_team_invitation_form") do %>
+                          <input type="hidden" name="team_invitation_id" id="<%= team_invitation.id %>" value="<%= team_invitation.id %>">
+                          <button class='btn'>Accept</button>
+                        <% end %>
+                        <%= form_tag("team_invitations/"+ team_invitation.id.to_s, :method => :delete, class: "col s6 reject_team_invitation_form") do %>
+                          <input type="hidden" name="team_invitation_id" id="team_invitation_id" value="<%= team_invitation.id %>">
+                          <button class='btn red'>Reject</button>     
+                        <% end %>
+                      </div>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
           <li><a href="/users/edit">Profile</a></li>
           <li>
             <a href="#" class='dropdown-button' data-activates='teams' data-beloworigin="true" alignment='left'>My Teams<i class="material-icons right">arrow_drop_down</i></a>

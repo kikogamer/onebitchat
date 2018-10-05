@@ -17,9 +17,13 @@ $(document).on 'turbolinks:load', ->
         }
         success: (data, text, jqXHR) ->
           Materialize.toast('User was invited to join the team &nbsp;<b>:)</b>', 4000, 'green')
+          $('#team_invitation_name').val('')
+          $('#team_invitation_email').val('')
         error: (jqXHR, textStatus, errorThrown) ->
-          Materialize.toast('Problem in add User &nbsp;<b>:(</b>', 4000, 'red')
-
+          if jqXHR.status == 422
+            Materialize.toast(jqXHR.responseText, 4000, 'red')
+          else
+            Materialize.toast('Problem in add User &nbsp;<b>:(</b>', 4000, 'red')
 
     $('#add_user_modal').modal('close')
     return false

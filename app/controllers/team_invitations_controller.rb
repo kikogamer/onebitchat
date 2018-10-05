@@ -8,6 +8,8 @@ class TeamInvitationsController < ApplicationController
     respond_to do |format|
       if TeamUser.where(user_id: @team_invitation.user_id, team_id: @team_invitation.team_id).exists?
         format.json { render json: 'user already belongs the team', status: :unprocessable_entity }
+      elsif TeamInvitation.where(user_id: @team_invitation.user_id, team_id: @team_invitation.team_id, joined_date: nil).exists?
+        format.json { render json: 'user already has pending invitation', status: :unprocessable_entity }
       elsif @team_invitation.save
         format.json { render json: @team_invitation, status: :created }
       else
@@ -33,13 +35,18 @@ class TeamInvitationsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @team_invitation.update(team_invitation_params)
-        format.json { render json: true }
-      else
-        format.json { render json: @team_invitation.errors, status: :unprocessable_entity }
+    TeamUser.transaction do
+      @team_invitation.update(joined_date: Time.zone.today)
+      team_user = TeamUser.new(team_id: @team_invitation.team.id, user_id: current_user.id)
+      
+      respond_to do |format|
+        if team_user.save
+          format.html { redirect_to "/#{@team_invitation.team.slug}" }
+        else
+          format.html { redirect_to main_app.root_url, notice: team_user.errors }
+        end
       end
-    end
+    end  
   end
 
   private
