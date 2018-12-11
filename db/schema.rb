@@ -25,13 +25,13 @@ ActiveRecord::Schema.define(version: 20181120182340) do
     t.index ["user_id"], name: "index_channels_on_user_id", using: :btree
   end
 
-  create_table "message_reads", force: :cascade do |t|
+  create_table "message_user_reads", force: :cascade do |t|
     t.integer  "message_id"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["message_id"], name: "index_message_reads_on_message_id", using: :btree
-    t.index ["user_id"], name: "index_message_reads_on_user_id", using: :btree
+    t.index ["message_id"], name: "index_message_user_reads_on_message_id", using: :btree
+    t.index ["user_id"], name: "index_message_user_reads_on_user_id", using: :btree
   end
 
   create_table "messages", force: :cascade do |t|
@@ -108,8 +108,8 @@ ActiveRecord::Schema.define(version: 20181120182340) do
 
   add_foreign_key "channels", "teams"
   add_foreign_key "channels", "users"
-  add_foreign_key "message_reads", "messages"
-  add_foreign_key "message_reads", "users"
+  add_foreign_key "message_user_reads", "messages"
+  add_foreign_key "message_user_reads", "users"
   add_foreign_key "talks", "teams"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"

@@ -1,7 +1,7 @@
 <ul class="side-nav fixed side-nav-channel" id="side-bar-channel">
    <li>
       <div>
-         <span class="team_title"><%= @team.slug %></span>
+         <span class="team_title" id="<%= @team.id %>"><%= @team.slug %></span>
          <% if can? :destroy, @team %>
          <a class="right team_icon remove_team" href="#">
          <i class="material-icons" id="<%= @team.id %>">settings</i>

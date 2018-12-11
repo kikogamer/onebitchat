@@ -5,7 +5,18 @@ clean_messages = () ->
     $(".messages").html("")
     $(".chat_name").html("")
 
-window.add_message = (message, message_date, name) ->
+window.notify_message = (type, id, user_id) ->
+  if type == 'channel'
+    talk = $('.channel_'+ id) 
+  else
+    talk = $('.user_'+ user_id)
+  
+  tag_user_id = $('#user_id')
+  current_user_id = tag_user_id.data('user-id')
+  if (user_id != current_user_id && talk)
+    talk.css('font-weight', 'bold')
+
+window.add_message = (message, message_date, name) ->  
   $(".messages").append('<div class="message col s12">' +
                           '<div class="col m2 l1">' +
                             '<i class="material-icons prefix right profile_icon">account_circle</i>'+
@@ -42,9 +53,6 @@ window.open = (id, type) ->
         Materialize.toast('Problem to get ' + type + ' informations &nbsp;<b>:(</b>', 4000, 'red')
 
     return false
-
-
-
 
 window.add = (slug, id, type) ->
   additional = if type == "channel" then "#" else ""

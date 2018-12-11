@@ -23,6 +23,7 @@
 
     <!-- logged partials -->
     <% if current_user %>
+      <div id="user_id" data-user-id="<%= current_user.id %>">
       <%= render "teams/add_modal" %>
       <% if @team %>
         <%= render "teams/remove_modal" %>
