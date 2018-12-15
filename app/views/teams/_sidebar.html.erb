@@ -25,7 +25,7 @@
                <span>
                   <ul class="channels">
                      <% @team.channels.each do |channel| %>
-                     <li class="channel_<%= channel.id %>">
+                     <li class="channel_<%= channel.id %>" style="<%= (channel.has_unread_messages(current_user.id) ? "font-weight: bold" : "") %>">
                         <div>
                            <a href="#" class="open_channel" id="<%= channel.id %>">
                            <span id="<%= channel.id %>">#<%= channel.slug %></span>
@@ -63,7 +63,7 @@
                         </li>
                         <% @team.my_users.each do |user| %>
                         <% if user != current_user %>
-                        <li class="user_<%= user.id %>">
+                        <li class="user_<%= user.id %>" style="<%= (user.has_unread_messages(current_user.id, @team.id) ? "font-weight: bold" : "") %>">
                            <div>
                               <a href="#" id="<%= user.id %>" class="open_user">
                                 <span id="<%= user.id %>"><%= user.name %></span>

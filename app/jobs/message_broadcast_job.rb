@@ -7,7 +7,8 @@ class MessageBroadcastJob < ApplicationJob
       ActionCable.server.broadcast(chat_name, {
                                                 message: message.body,
                                                 date: message.created_at.strftime("%d/%m/%y"),
-                                                name: message.user.name
+                                                name: message.user.name,
+                                                user_id: message.user.id
                                               })                 
     end
 end

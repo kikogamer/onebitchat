@@ -15,4 +15,14 @@ class User < ApplicationRecord
   def my_team_invitations
     TeamInvitation.where(user: self, joined_date: nil)
   end
+
+  def has_unread_messages(current_user_id, team_id)
+    talk = Talk.find_by(user_one_id: [self.id, current_user_id], user_two_id: [self.id, current_user_id], team: team_id)
+    if (talk)
+      message_ids = talk.messages.where(user_id: self.id).pluck(:id)
+      message_ids.length > MessageUserRead.where(message_id: message_ids, user_id: current_user_id).count
+    else
+      false  
+    end
+  end
 end

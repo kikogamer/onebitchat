@@ -11,6 +11,9 @@ class ChatChannel < ApplicationCable::Channel
   def receive(data)
     @message = Message.new(body: data["message"], user: current_user)
     @record.messages << @message
+
+    @message_user_read = MessageUserRead.new(message: @message, user: current_user) 
+    @message_user_read.save
   end
 
   private

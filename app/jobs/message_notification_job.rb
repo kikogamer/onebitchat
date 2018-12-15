@@ -3,7 +3,7 @@ class MessageNotificationJob < ApplicationJob
 
     def perform(message)
         m = message.messagable        
-        (m.class == Channel ? type = "channel" : type = "talk")
+        (m.class == Channel ? type = "channels" : type = "talks")
         notification_name = "#{m.team.id}"
         
         ActionCable.server.broadcast(notification_name, {
