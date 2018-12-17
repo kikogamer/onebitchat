@@ -24,6 +24,8 @@
     <!-- logged partials -->
     <% if current_user %>
       <div id="user_id" data-user-id="<%= current_user.id %>">
+        <div id="user-avatar" class="hide"><%= image_tag(current_user.avatar.thumb) %>
+      </div>
       <%= render "teams/add_modal" %>
       <% if @team %>
         <%= render "teams/remove_modal" %>
