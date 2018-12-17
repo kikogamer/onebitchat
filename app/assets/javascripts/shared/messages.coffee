@@ -22,9 +22,11 @@ window.notify_message = (type, id, user_id) ->
 window.add_message = (message, message_date, name, read) ->  
   class_notify = if read then "" else "notify_message"
 
+  user_avatar = $('#user-avatar').html()
+  
   $(".messages").append('<div class="message col s12">' +
                           '<div class="col m2 l1">' +
-                            '<i class="material-icons prefix right profile_icon">account_circle</i>'+
+                            user_avatar +
                           '</div>'+
                           '<div class="col m10 s9">'+
                             '<div class="row">'+

@@ -42,6 +42,9 @@ gem 'materialize-sass', '~> 0.98.2'
 gem 'material_icons'
 gem 'redis', '~> 3.0.0'
 
+gem 'carrierwave'
+gem 'mini_magick'
+
 group :test do
   gem "factory_bot_rails"
   gem "ffaker"

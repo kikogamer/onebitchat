@@ -5,8 +5,9 @@ class User < ApplicationRecord
   has_many :team_users, dependent: :destroy
   has_many :member_teams, through: :team_users, :source => :team
   has_many :team_invitations
-  devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise  :invitable, :database_authenticatable, :registerable,
+          :recoverable, :rememberable, :trackable, :validatable
+  mount_uploader :avatar, AvatarUploader
 
   def my_teams
     self.teams + self.member_teams
